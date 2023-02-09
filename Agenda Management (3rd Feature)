@@ -1,0 +1,73 @@
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Button, TextInput, FlatList } from "react-native";
+
+const AgendaScreen = () => {
+  const [agendaItems, setAgendaItems] = useState([]);
+  const [newAgendaItem, setNewAgendaItem] = useState("");
+
+  const handleAddAgendaItem = () => {
+    setAgendaItems([...agendaItems, newAgendaItem]);
+    setNewAgendaItem("");
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Agenda</Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Add Agenda Item"
+          onChangeText={(text) => setNewAgendaItem(text)}
+          value={newAgendaItem}
+        />
+        <Button title="Add" onPress={handleAddAgendaItem} />
+      </View>
+      <FlatList
+        style={styles.list}
+        data={agendaItems}
+        renderItem={({ item, index }) => (
+          <View style={styles.listItem}>
+            <Text>{index + 1}. {item}</Text>
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  header: {
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    padding: 10,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    marginRight: 10,
+  },
+  list: {
+    flex: 1,
+  },
+  listItem: {
+    borderBottomWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+  },
+});
+
+export default AgendaScreen;

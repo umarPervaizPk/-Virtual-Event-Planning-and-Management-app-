@@ -1,0 +1,79 @@
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Button, TextInput } from "react-native";
+
+const EventScreen = () => {
+  const [eventName, setEventName] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [eventTime, setEventTime] = useState("");
+
+  const handleCreateEvent = () => {
+    // Implement the logic to create the event here
+    // This can include sending a request to a server to store the event data
+    // You can also store the event data in the local state or in a database
+    console.log(`Creating event: ${eventName} on ${eventDate} at ${eventTime}`);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Create Event</Text>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Event Name</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => setEventName(text)}
+          value={eventName}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Event Date</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => setEventDate(text)}
+          value={eventDate}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Event Time</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => setEventTime(text)}
+          value={eventTime}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button title="Create Event" onPress={handleCreateEvent} />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  header: {
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  input: {
+    height: 40,
+    padding: 10,
+    borderColor: "#ccc",
+    borderWidth: 1,
+  },
+  buttonContainer: {
+    marginTop: 20,
+  },
+});
+
+export default EventScreen;

@@ -1,0 +1,102 @@
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Button, Picker } from "react-native";
+
+const AnalyticsScreen = () => {
+  const [selectedEvent, setSelectedEvent] = useState("");
+  const [eventData, setEventData] = useState([]);
+
+  useEffect(() => {
+    // Fetch event data from server or database
+    setEventData([
+      {
+        id: 1,
+        name: "Event 1",
+        attendees: 100,
+        engagement: 80,
+      },
+      {
+        id: 2,
+        name: "Event 2",
+        attendees: 75,
+        engagement: 70,
+      },
+      {
+        id: 3,
+        name: "Event 3",
+        attendees: 50,
+        engagement: 60,
+      },
+    ]);
+  }, []);
+
+  const handleEventSelection = (eventId) => {
+    setSelectedEvent(eventId);
+  };
+
+  const selectedEventData = eventData.find((event) => event.id === selectedEvent);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Analytics and Reports</Text>
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={selectedEvent}
+          style={styles.picker}
+          onValueChange={(itemValue) => handleEventSelection(itemValue)}
+        >
+          <Picker.Item label="Select Event" value="" />
+          {eventData.map((event) => (
+            <Picker.Item key={event.id} label={event.name} value={event.id} />
+          ))}
+        </Picker>
+      </View>
+      {selectedEventData && (
+        <View style={styles.dataContainer}>
+          <Text style={styles.dataItem}>
+            Attendees: {selectedEventData.attendees}
+          </Text>
+          <Text style={styles.dataItem}>
+            Engagement: {selectedEventData.engagement}%
+          </Text>
+        </View>
+      )}
+      <View style={styles.buttonContainer}>
+        <Button title="Download Report" onPress={() => {
+          // Code for downloading the report
+        }} />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  header: {
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  pickerContainer: {
+    marginBottom: 20,
+  },
+  picker: {
+    height: 40,
+    padding: 10,
+    borderColor: "#ccc",
+    borderWidth: 1,
+  },
+  dataContainer: {
+    marginBottom: 20,
+  },
+  dataItem: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    marginTop: 20,
+  },
+});

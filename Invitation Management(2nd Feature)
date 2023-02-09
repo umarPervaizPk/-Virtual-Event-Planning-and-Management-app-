@@ -1,0 +1,81 @@
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Button, FlatList } from "react-native";
+
+const InvitationScreen = () => {
+  const [invitations, setInvitations] = useState([
+    { id: 1, name: "John Doe", status: "Accepted" },
+    { id: 2, name: "Jane Doe", status: "Declined" },
+    { id: 3, name: "Jim Smith", status: "Pending" },
+  ]);
+
+  const changeInvitationStatus = (id, status) => {
+    setInvitations((prevInvitations) =>
+      prevInvitations.map((invitation) =>
+        invitation.id === id
+          ? { ...invitation, status }
+          : invitation
+      )
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Invitations</Text>
+      <FlatList
+        data={invitations}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.invitationContainer}>
+            <Text style={styles.name}>{item.name}</Text>
+            <View style={styles.buttonContainer}>
+              <Button
+                title="Accept"
+                onPress={() => changeInvitationStatus(item.id, "Accepted")}
+                disabled={item.status === "Accepted"}
+              />
+              <Button
+                title="Decline"
+                onPress={() => changeInvitationStatus(item.id, "Declined")}
+                disabled={item.status === "Declined"}
+              />
+            </View>
+            <Text style={styles.status}>{item.status}</Text>
+          </View>
+        )}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  header: {
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  invitationContainer: {
+    marginBottom: 20,
+    padding: 20,
+    backgroundColor: "#eee",
+  },
+  name: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  status: {
+    fontSize: 16,
+    marginTop: 10,
+    textAlign: "right",
+  },
+});
+
+export default InvitationScreen;

@@ -33,6 +33,7 @@ const InvitationScreen = () => {
                 onPress={() => changeInvitationStatus(item.id, "Accepted")}
                 disabled={item.status === "Accepted"}
               />
+              
               <Button
                 title="Decline"
                 onPress={() => changeInvitationStatus(item.id, "Declined")}

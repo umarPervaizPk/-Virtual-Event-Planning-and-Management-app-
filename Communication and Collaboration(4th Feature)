@@ -1,0 +1,80 @@
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Button, TextInput, ScrollView } from "react-native";
+
+const EventScreen = () => {
+  const [eventName, setEventName] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [eventTime, setEventTime] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
+
+  const handleSendMessage = () => {
+    setMessages([...messages, message]);
+    setMessage("");
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>{eventName}</Text>
+      <Text style={styles.subheader}>{eventDate} {eventTime}</Text>
+
+      <ScrollView style={styles.messageContainer}>
+        {messages.map((item, index) => (
+          <Text key={index} style={styles.messageText}>
+            {item}
+          </Text>
+        ))}
+      </ScrollView>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={message}
+          onChangeText={(text) => setMessage(text)}
+        />
+        <Button title="Send" onPress={handleSendMessage} />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  subheader: {
+    fontSize: 18,
+    color: "#999",
+    marginBottom: 20,
+  },
+  messageContainer: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#eee",
+  },
+  messageText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  input: {
+    flex: 1,
+    padding: 10,
+    fontSize: 16,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+});
+
+export default EventScreen;
